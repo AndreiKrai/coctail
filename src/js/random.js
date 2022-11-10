@@ -148,6 +148,11 @@ function clearContainer() {
   divRef.innerHTML = '';
 }
 export function wichDataToUse(numberOfCards, data) {
+  if (divRef.dataset.page === 'favorite-coctails' && !JSON.parse(localStorage.getItem('FAV_COCTAILS'))) {
+console.log('no favorits');
+return
+  }
+  
   if (divRef.dataset.page === 'favorite-coctails') {
     allPromises = JSON.parse(localStorage.getItem('FAV_COCTAILS'));
     console.log('favorite-coctails  allPromises', allPromises);
@@ -163,20 +168,15 @@ export function wichDataToUse(numberOfCards, data) {
   }
 
   getRandomData(numberOfCards);
-  // console.log('getRandomData  allPromises', allPromises);
 }
 
 // фильтрация промисей
 async function getRandomData(numberOfCards) {
-  // Andrei
-
-  // Andrei
   const promises = await getRandomCoctails(numberOfCards);
   const data = await returnAllCard(promises);
   const fData = filterData(data);
-
   allPromises = [...fData];
-  // console.log(allPromises);
+  console.log('getRandomData ');
 
   start(numberOfCards);
 }
